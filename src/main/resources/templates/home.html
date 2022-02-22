@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+
+        <title>Home</title>
+    </head>
+    <body class="p-3 mb-2 bg-light text-black">
+        <div class="container">
+
+            <div id="contentDiv" style="clear: right;">
+                <div class="tab-content" id="nav-tabContent">
+
+
+                    <div class="tab-pane fade active show" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
+
+                        <form action="#" th:action="@{/signup}" method="POST">
+
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Searched text based on Country and City..." aria-label="Searched text based on Country and City..." aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button">Search</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="table-responsive">
+
+                            <div id="error-note-msg" th:if="${noteMsgShowOrNotShow}" th:class="${classnotemessage}" class="alert alert-danger" >
+                                <span id="note-Nav-Message" th:text="${noteNavErrorMeesage}"></span>
+                            </div>
+
+                            <table class="table table-striped" id="userTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%" scope="col">Country</th>
+                                        <th style="width: 20%" scope="col">City</th>
+                                        <th style="width: 20%" scope="col">latitude</th>
+                                        <th style="width: 40%" scope="col">longitude</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="note1 : ${noteslist}">
+                                        <td scope="row" id="note-title-record"  th:text="${note1.notetitle}">Example Note Title</td>
+                                        <td id="note-description-record" th:text="${note1.notedescription}">Example Note Description </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </body>
+</html>
