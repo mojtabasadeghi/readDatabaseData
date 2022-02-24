@@ -4,63 +4,117 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <link th:rel="stylesheet" th:href="@{/css/jquery.treetable.css}"/>
+        <link th:rel="stylesheet" th:href="@{/css/jquery.treetable.theme.default.css}"/>
         <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 
         <title>Home</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
-        <div class="container">
-
-            <div id="contentDiv" style="clear: right;">
-                <div class="tab-content" id="nav-tabContent">
 
 
-                    <div class="tab-pane fade active show" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-
-                        <form action="#" th:action="@{/signup}" method="POST">
-
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Searched text based on Country and City..." aria-label="Searched text based on Country and City..." aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">Search</button>
-                                </div>
-                            </div>
-
-                        </form>
-
-                        <div class="table-responsive">
-
-                            <div id="error-note-msg" th:if="${noteMsgShowOrNotShow}" th:class="${classnotemessage}" class="alert alert-danger" >
-                                <span id="note-Nav-Message" th:text="${noteNavErrorMeesage}"></span>
-                            </div>
-
-                            <table class="table table-striped" id="userTable">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 20%" scope="col">Country</th>
-                                        <th style="width: 20%" scope="col">City</th>
-                                        <th style="width: 20%" scope="col">latitude</th>
-                                        <th style="width: 40%" scope="col">longitude</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="note1 : ${noteslist}">
-                                        <td scope="row" id="note-title-record"  th:text="${note1.notetitle}">Example Note Title</td>
-                                        <td id="note-description-record" th:text="${note1.notedescription}">Example Note Description </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
 
+            <form action="#" th:action="@{/signup}" method="POST">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Searched text based on Country and City..." aria-label="Searched text based on Country and City..." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Search</button>
                     </div>
-
                 </div>
-            </div>
+
+            </form>
+
+        <div class="row">
+            <button style="margin: 0.25em;" type="button" id="add-new-credential" class="btn btn-info float-right" onclick="showCredentialModal()">
+                + Add a New record
+            </button>
         </div>
 
+        <div class="row">
+            <div class="col-md-9">
+
+                                <div class="table-responsive">
+
+                                    <div id="error-note-msg" th:if="${noteMsgShowOrNotShow}" th:class="${classnotemessage}" class="alert alert-danger" >
+                                        <span id="note-Nav-Message" th:text="${noteNavErrorMeesage}"></span>
+                                    </div>
+
+                                    <table class="table table-striped" id="userTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1" scope="col">Country</th>
+                                                <th class="col-md-1" scope="col">Base</th>
+                                                <th class="col-md-1" scope="col">Lati</th>
+                                                <th class="col-md-1" scope="col">Longi</th>
+                                                <th class="col-md-1" scope="col">#Bases</th>
+                                                <th class="col-md-1" scope="col">Lily Pads</th>
+                                                <th class="col-md-1" scope="col">US funded</th>
+                                                <th class="col-md-1" scope="col">Source</th>
+                                                <th class="col-md-1" scope="col">Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="note1 : ${noteslist}">
+                                                <td class="col-md-1" id="country-record"  th:text="${note1.notetitle}">Example Country</td>
+                                                <td class="col-md-1" id="base-name-record" th:text="${note1.notedescription}">Example Base name</td>
+                                                <td class="col-md-1" id="latitude-record"  th:text="${note1.notetitle}">Example Latitude</td>
+                                                <td class="col-md-1" id="longitude-record" th:text="${note1.notedescription}">Example Longitude</td>
+                                                <td class="col-md-1" id="base-number-record"  th:text="${note1.notetitle}">Example Base number</td>
+                                                <td class="col-md-1" id="lily-record" th:text="${note1.notedescription}">Example Lily Pads</td>
+                                                <td class="col-md-1" id="usfu-record"  th:text="${note1.notetitle}">Example US funded</td>
+                                                <td class="col-md-1" id="source-record" th:text="${note1.notedescription}">Example Source</td>
+                                                <td class="col-md-1" id="note-record" th:text="${note1.notedescription}">Example Note</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
 
+            </div>
+            <div class="col-md-3">
+
+                    <div class="row">
+                        <table id="treeTable" class="table">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">First Name</th>
+                                <th class="col-md-1">URL</th>
+                                <th class="col-md-1">Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+            </div>
+        </div>
+            <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+            <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+            <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/jquery.treetable.js}"></script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $.ajax({
+                        "type": 'get',
+                        "url": '/nodes',
+                        "dataType": "json",
+                        "success": function (data) {
+                            $.each(data, function (idx, obj) {
+                                $("#treeTable").append("<tr data-tt-id=\"" + obj.nodeId + "\" data-tt-parent-id=\"" + obj.pid + "\"><td>" + obj.text + "</td><td>" + obj.href + "</td><td><button class='btn btn-primary' id=\"" + obj.nodeId + "\">edit</button><button class='btn btn-danger' id=\"" + obj.nodeId + "\">delete</button></td></tr>");
+                            });
+                            $("#treeTable").treetable({
+                                expandable: true,
+                                initialState: "expanded",
+                                clickableNodeNames: true,
+                                indent: 30
+                            });
+                        }
+                    });
+                });
+            </script>
 
     </body>
 </html>
