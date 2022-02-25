@@ -19,9 +19,9 @@
             <form action="#" th:action="@{/search}"  method="POST">
 
                 <div class="input-group mb-3">
-                    <input id="search-txt" type="text" class="form-control" name="searchTxt"  placeholder="请在这里搜素国家或基地名称..." aria-label="请在这里搜素国家或基地名称..." aria-describedby="basic-addon2">
+                    <input id="search-txt" type="text" class="form-control" name="searchTxt"  placeholder="Searched text based on Country and City..." aria-label="Searched text based on Country and City..." aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" >搜索</button>
+                        <button class="btn btn-outline-secondary" type="submit" >Search</button>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@
 
         <div class="row">
             <button style="margin: 0.25em;" type="button" id="add-new-note" class="btn btn-info float-right" onclick="showNoteModal()">
-                + 添加新的记录
+                + Add a New record
             </button>
         </div>
 
@@ -40,7 +40,7 @@
                     <table id="treeTable" class="table">
                         <thead>
                         <tr>
-                            <th class="col-md-3">国家及基地名字</th>
+                            <th class="col-md-3">Country Name</th>
                         </tr>
                         </thead>
                     </table>
@@ -59,15 +59,15 @@
                                     <table class="table table-striped" id="userTable">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-1" scope="col">国家</th>
-                                                <th class="col-md-1" scope="col">基地</th>
-                                                <th class="col-md-1" scope="col">纬度</th>
-                                                <th class="col-md-1" scope="col">经度</th>
-                                                <th class="col-md-1" scope="col">有无基地</th>
-                                                <th class="col-md-1" scope="col">是否提供安全合作场所</th>
-                                                <th class="col-md-1" scope="col">有无美国资助</th>
-                                                <th class="col-md-1" scope="col">内容源</th>
-                                                <th class="col-md-1" scope="col">备注</th>
+                                                <th class="col-md-1" scope="col">Country</th>
+                                                <th class="col-md-1" scope="col">Base</th>
+                                                <th class="col-md-1" scope="col">Lati</th>
+                                                <th class="col-md-1" scope="col">Longi</th>
+                                                <th class="col-md-1" scope="col">#Bases</th>
+                                                <th class="col-md-1" scope="col">Lily Pads</th>
+                                                <th class="col-md-1" scope="col">US funded</th>
+                                                <th class="col-md-1" scope="col">Source</th>
+                                                <th class="col-md-1" scope="col">Note</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,7 +94,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="noteModalLabel">新数据</h5>
+                            <h5 class="modal-title" id="noteModalLabel">New Data</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -103,39 +103,39 @@
                             <form action="#" th:action="@{/insert}"   method="POST">
                                 <input type="hidden" name="noteId" id="note-id">
                                 <div class="form-group">
-                                    <label for="country-name" class="col-form-label">国家名字</label>
+                                    <label for="country-name" class="col-form-label">Country Name</label>
                                     <input type="text" name="countryName"  class="form-control" id="country-name" maxlength="200" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="base-name" class="col-form-label">基地名字</label>
+                                    <label for="base-name" class="col-form-label">Base Name</label>
                                     <input type="text" name="baseName"  class="form-control" id="base-name" maxlength="200" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="latitude-data" class="col-form-label">纬度</label>
+                                    <label for="latitude-data" class="col-form-label">Latitude</label>
                                     <input type="text" name="latitude"  class="form-control" id="latitude-data" maxlength="20" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="longitude-data" class="col-form-label">经度</label>
+                                    <label for="longitude-data" class="col-form-label">Longitude</label>
                                     <input type="text" name="longitude"  class="form-control" id="longitude-data" maxlength="20" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="base-number" class="col-form-label">有无基地</label>
+                                    <label for="base-number" class="col-form-label">Base Number</label>
                                     <input type="text" name="baseNumber"  class="form-control" id="base-number" maxlength="5"  >
                                 </div>
                                 <div class="form-group">
-                                    <label for="lily-pads-number" class="col-form-label">是否提供安全合作场所</label>
+                                    <label for="lily-pads-number" class="col-form-label">lily Pads Number</label>
                                     <input type="text" name="lilyPadsNumber"  class="form-control" id="lily-pads-number" maxlength="5"  >
                                 </div>
                                 <div class="form-group">
-                                    <label for="us-funded-number" class="col-form-label">有美国资助</label>
+                                    <label for="us-funded-number" class="col-form-label">US Funded Number</label>
                                     <input type="text" name="usFundedNumber"  class="form-control" id="us-funded-number" maxlength="5" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="note-data" class="col-form-label">备注</label>
+                                    <label for="note-data" class="col-form-label">Note</label>
                                     <input type="text" name="note"  class="form-control" id="note-data" maxlength="200"  >
                                 </div>
                                 <div class="form-group">
-                                    <label for="sources-data" class="col-form-label">内容源</label>
+                                    <label for="sources-data" class="col-form-label">Sources</label>
                                     <input type="text" name="sources"  class="form-control" id="sources-data" maxlength="200" >
                                 </div>
                                 <input type="hidden" id="dataInsOrUpd"/>
@@ -143,8 +143,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" id="noteSubmit-javascript"  onclick="$('#noteSubmit').click();">保存此记录</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="noteSubmit-javascript"  onclick="$('#noteSubmit').click();">Save changes</button>
                         </div>
                     </div>
                 </div>
