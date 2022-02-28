@@ -27,8 +27,7 @@ public class DataFromDatabaseService {
     public List<DataFromDatabase> getSearchResult(String searchInput) {
         if (StringUtils.hasText(searchInput))
             return dataFromDatabaseMapper.getSearchResultByCountryAndBaseName('%' + searchInput + '%');
-        else
-            return dataFromDatabaseMapper.getAlldata();
+        else return dataFromDatabaseMapper.getAlldata();
     }
 
     public List<DataFromDatabase> getAlldataByCountryName(String countryName) {

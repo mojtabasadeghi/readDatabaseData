@@ -15,9 +15,8 @@ public class BooleanNodeService {
 
     private final DataFromDatabaseMapper dataFromDatabaseMapper;
 
-    public BooleanNodeService(DataFromDatabaseMapper dataFromDatabaseMapper)
-    {
-        this.dataFromDatabaseMapper=dataFromDatabaseMapper;
+    public BooleanNodeService(DataFromDatabaseMapper dataFromDatabaseMapper) {
+        this.dataFromDatabaseMapper = dataFromDatabaseMapper;
     }
 
     public List<Node> getSampleNodeList() {
@@ -41,16 +40,15 @@ public class BooleanNodeService {
         return generateTree();
     }
 
-    private List<Node> generateTree()
-    {
+    private List<Node> generateTree() {
         List<Node> nodes = new ArrayList<>();
         nodes.add(new Node("Root", "0", "#", ""));
-        List<String> counryNames=dataFromDatabaseMapper.getAllCountryNames();
-        counryNames.forEach(e->{
-            List<DataFromDatabase> dataFromDatabases= dataFromDatabaseMapper.getAlldataByCountryName(e);
+        List<String> counryNames = dataFromDatabaseMapper.getAllCountryNames();
+        counryNames.forEach(e -> {
+            List<DataFromDatabase> dataFromDatabases = dataFromDatabaseMapper.getAlldataByCountryName(e);
             String uniqueID = UUID.randomUUID().toString();
             nodes.add(new Node(uniqueID, "Root", e, ""));
-            dataFromDatabases.forEach(element-> nodes.add(new Node(element.getDataId().toString(), uniqueID, element.getBaseName(), "")));
+            dataFromDatabases.forEach(element -> nodes.add(new Node(element.getDataId().toString(), uniqueID, element.getBaseName(), "")));
 
         });
 

@@ -32,7 +32,7 @@ public class DataFromDatabase {
         this.usFundedNumber = builder.usFundedNumber;
         this.note = builder.note;
         this.sources = builder.sources;
-        this.dataInsOrUpd=builder.dataInsOrUpd;
+        this.dataInsOrUpd = builder.dataInsOrUpd;
     }
 
     public DataFromDatabase() {
