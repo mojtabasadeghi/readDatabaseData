@@ -11,6 +11,15 @@ public class DataFromDatabase {
     private int usFundedNumber;
     private String note;
     private String sources;
+    private String dataInsOrUpd;
+
+    public String getDataInsOrUpd() {
+        return dataInsOrUpd;
+    }
+
+    public void setDataInsOrUpd(String dataInsOrUpd) {
+        this.dataInsOrUpd = dataInsOrUpd;
+    }
 
     private DataFromDatabase(DataFromDatabaseBuilder builder) {
         this.dataId = builder.dataId;
@@ -23,6 +32,7 @@ public class DataFromDatabase {
         this.usFundedNumber = builder.usFundedNumber;
         this.note = builder.note;
         this.sources = builder.sources;
+        this.dataInsOrUpd=builder.dataInsOrUpd;
     }
 
     public DataFromDatabase() {
@@ -119,6 +129,7 @@ public class DataFromDatabase {
         private int usFundedNumber;
         private String note;
         private String sources;
+        private String dataInsOrUpd;
 
         public DataFromDatabaseBuilder() {
         }
@@ -170,6 +181,11 @@ public class DataFromDatabase {
 
         public DataFromDatabaseBuilder sources(String sources) {
             this.sources = sources;
+            return this;
+        }
+
+        public DataFromDatabaseBuilder dataInsOrUpd(String dataInsOrUpd) {
+            this.dataInsOrUpd = dataInsOrUpd;
             return this;
         }
 

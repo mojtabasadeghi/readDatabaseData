@@ -25,7 +25,6 @@ public class ReadFileApplication {
             dataFromDatabaseService.insertData(new DataFromDatabase.DataFromDatabaseBuilder().countryName("AUSTRALIA").baseName("Exmouth, Northwest Cape").latitude("-21.882527").longitude("67.567333").baseNumber(1).note("test info").sources("BSR; http://www.aljazeera.com/indepth/interactive/2012/04/2012417131242767298.html").build());
             dataFromDatabaseService.insertData(new DataFromDatabase.DataFromDatabaseBuilder().countryName("AUSTRALIA").baseName("Alice Springs").latitude("22.216667").longitude("8.583333").baseNumber(1).note("See Al Jaz. Map for 3 locs").sources("BSR; http://www.aljazeera.com/indepth/interactive/2012/04/2012417131242767298.html").build());
             dataFromDatabaseService.insertData(new DataFromDatabase.DataFromDatabaseBuilder().countryName("AUSTRALIA").baseName("Darwin, Robertson Barracks").latitude("12.216667").longitude("15.583333").baseNumber(1).note("See Al Jaz. Map for 3 locs").sources("BSR; http://www.aljazeera.com/indepth/interactive/2012/04/2012417131242767298.html").build());
-
         };
     }
 }

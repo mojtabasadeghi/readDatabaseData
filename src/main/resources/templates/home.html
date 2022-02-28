@@ -12,35 +12,36 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
 
-
-
-    <!--th:object="${searchContext}"
-     th:field="*{searchTxt}"-->
             <form action="#" th:action="@{/search}"  method="POST">
 
                 <div class="input-group mb-3">
-                    <input id="search-txt" type="text" class="form-control" name="searchTxt"  placeholder="请在这里搜素国家或基地名称..." aria-label="请在这里搜素国家或基地名称..." aria-describedby="basic-addon2">
+                    <input id="search-txt" type="text" class="form-control" name="searchTxt"  placeholder="Searched text based on Country and City..." aria-label="Searched text based on Country and City..." aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" >搜索</button>
+                        <button class="btn btn-outline-secondary" type="submit" >Search</button>
                     </div>
                 </div>
 
             </form>
 
         <div class="row">
-            <button style="margin: 0.25em;" type="button" id="add-new-note" class="btn btn-info float-right" onclick="showNoteModal()">
-                + 添加新的记录
+            <button style="margin: 0.25em;" type="button" id="add-new-note" class="btn btn-info float-right" onclick="showDataModal()">
+                + Add a New record
             </button>
         </div>
 
         <div class="row">
-            <div class="col-md-3">
+            <div id="error-note-msg" th:if="${noteMsgShowOrNotShow}" th:class="${classMessage}" class="alert alert-danger" >
+                <span id="note-Nav-Message" th:text="${textMessage}"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
 
                 <div class="row">
                     <table id="treeTable" class="table">
                         <thead>
                         <tr>
-                            <th class="col-md-3">国家及基地名字</th>
+                            <th class="col-md-2">Country Name</th>
                         </tr>
                         </thead>
                     </table>
@@ -48,30 +49,33 @@
 
 
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
 
                                 <div class="table-responsive">
 
-                                    <div id="error-note-msg" th:if="${noteMsgShowOrNotShow}" th:class="${classnotemessage}" class="alert alert-danger" >
-                                        <span id="note-Nav-Message" th:text="${noteNavErrorMeesage}"></span>
-                                    </div>
+
 
                                     <table class="table table-striped" id="userTable">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-1" scope="col">国家</th>
-                                                <th class="col-md-1" scope="col">基地</th>
-                                                <th class="col-md-1" scope="col">纬度</th>
-                                                <th class="col-md-1" scope="col">经度</th>
-                                                <th class="col-md-1" scope="col">有无基地</th>
-                                                <th class="col-md-1" scope="col">是否提供安全合作场所</th>
-                                                <th class="col-md-1" scope="col">有无美国资助</th>
-                                                <th class="col-md-1" scope="col">内容源</th>
-                                                <th class="col-md-1" scope="col">备注</th>
+                                                <th class="col-md-2" scope="col"></th>
+                                                <th class="col-md-1" scope="col">Country</th>
+                                                <th class="col-md-1" scope="col">Base</th>
+                                                <th class="col-md-1" scope="col">Lati</th>
+                                                <th class="col-md-1" scope="col">Longi</th>
+                                                <th class="col-md-1" scope="col">#Bases</th>
+                                                <th class="col-md-1" scope="col">Lily Pads</th>
+                                                <th class="col-md-1" scope="col">US funded</th>
+                                                <th class="col-md-1" scope="col">Source</th>
+                                                <th class="col-md-1" scope="col">Note</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr th:each="data : ${datalist}">
+                                                <td class="col-md-1">
+                                                    <button type="button" class="btn btn-success" id="edit-data"  th:attr="datasource-id=${data.dataId},datasource-countryName=${data.countryName},datasource-baseName=${data.baseName},datasource-latitude=${data.latitude},datasource-longitude=${data.longitude},datasource-baseNumber=${data.baseNumber},datasource-lilyPadsNumber=${data.lilyPadsNumber},datasource-usFundedNumber=${data.usFundedNumber},datasource-note=${data.note},datasource-sources=${data.sources}" onclick="myEditDataFunction(this)">Edit</button>
+                                                    <a class="btn btn-danger" id="delete-note" th:href="${'/delete/'+data.dataId}">Delete</a>
+                                                </td>
                                                 <td class="col-md-1" id="country-record"  th:text="${data.countryName}">Example Country</td>
                                                 <td class="col-md-1" id="base-name-record" th:text="${data.baseName}">Example Base name</td>
                                                 <td class="col-md-1" id="latitude-record"  th:text="${data.latitude}">Example Latitude</td>
@@ -90,61 +94,61 @@
             </div>
 
 
-            <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="dataModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="noteModalLabel">新数据</h5>
+                            <h5 class="modal-title" id="dataModalLabel">New Data</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="#" th:action="@{/insert}"   method="POST">
-                                <input type="hidden" name="noteId" id="note-id">
+                            <form action="#" th:action="@{/database}" th:Object="${dataFromHome}"   method="POST">
+                                <input type="hidden" name="dataId" id="data-id" >
                                 <div class="form-group">
-                                    <label for="country-name" class="col-form-label">国家名字</label>
-                                    <input type="text" name="countryName"  class="form-control" id="country-name" maxlength="200" required >
+                                    <label for="country-name" class="col-form-label">Country Name</label>
+                                    <input type="text" name="countryName"  class="form-control" id="country-name" th:field="*{countryName}" maxlength="200" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="base-name" class="col-form-label">基地名字</label>
-                                    <input type="text" name="baseName"  class="form-control" id="base-name" maxlength="200" required >
+                                    <label for="base-name" class="col-form-label">Base Name</label>
+                                    <input type="text" name="baseName"  class="form-control" id="base-name" maxlength="200" th:field="*{baseName}"  required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="latitude-data" class="col-form-label">纬度</label>
-                                    <input type="text" name="latitude"  class="form-control" id="latitude-data" maxlength="20" required >
+                                    <label for="latitude-data" class="col-form-label">Latitude</label>
+                                    <input type="text" name="latitude"  class="form-control" id="latitude-data" maxlength="20" th:field="*{latitude}" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="longitude-data" class="col-form-label">经度</label>
-                                    <input type="text" name="longitude"  class="form-control" id="longitude-data" maxlength="20" required >
+                                    <label for="longitude-data" class="col-form-label">Longitude</label>
+                                    <input type="text" name="longitude"  class="form-control" id="longitude-data" maxlength="20" th:field="*{longitude}" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="base-number" class="col-form-label">有无基地</label>
-                                    <input type="text" name="baseNumber"  class="form-control" id="base-number" maxlength="5"  >
+                                    <label for="base-number" class="col-form-label">Base Number</label>
+                                    <input type="number" name="baseNumber"  class="form-control" id="base-number" maxlength="5" th:field="*{baseNumber}" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="lily-pads-number" class="col-form-label">是否提供安全合作场所</label>
-                                    <input type="text" name="lilyPadsNumber"  class="form-control" id="lily-pads-number" maxlength="5"  >
+                                    <label for="lily-pads-number" class="col-form-label">lily Pads Number</label>
+                                    <input type="number" name="lilyPadsNumber"  class="form-control" id="lily-pads-number" maxlength="5"  th:field="*{lilyPadsNumber}" required >
                                 </div>
                                 <div class="form-group">
-                                    <label for="us-funded-number" class="col-form-label">有美国资助</label>
-                                    <input type="text" name="usFundedNumber"  class="form-control" id="us-funded-number" maxlength="5" >
+                                    <label for="us-funded-number" class="col-form-label">US Funded Number</label>
+                                    <input type="number" name="usFundedNumber"  class="form-control" id="us-funded-number" maxlength="5" th:field="*{usFundedNumber}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="note-data" class="col-form-label">备注</label>
-                                    <input type="text" name="note"  class="form-control" id="note-data" maxlength="200"  >
+                                    <label for="note-data" class="col-form-label">Note</label>
+                                    <input type="text" name="note"  class="form-control" id="note-data" maxlength="200" th:field="*{note}" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="sources-data" class="col-form-label">内容源</label>
-                                    <input type="text" name="sources"  class="form-control" id="sources-data" maxlength="200" >
+                                    <label for="sources-data" class="col-form-label">Sources</label>
+                                    <input type="text" name="sources"  class="form-control" id="sources-data" maxlength="200" th:field="*{sources}">
                                 </div>
-                                <input type="hidden" id="dataInsOrUpd"/>
+                                <input type="hidden" id="dataInsOrUpd" th:field="*{dataInsOrUpd}"/>
                                 <button id="noteSubmit" type="submit" class="d-none"></button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" id="noteSubmit-javascript"  onclick="$('#noteSubmit').click();">保存此记录</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="noteSubmit-javascript"  onclick="$('#noteSubmit').click();">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -179,23 +183,36 @@
     <!--For opening the note modal-->
     <script type="text/javascript">
             // For opening the note modal
-            function showNoteModal(noteId, noteTitle, noteDescription) {
-                $('#note-id').val(noteId ? noteId : '');
-                $('#note-title').val(noteTitle ? noteTitle : '');
-                $('#note-description').val(noteDescription ? noteDescription : '');
+            function showDataModal(dataId,countryName,baseName,latitude,longitude,baseNumber,lilyPadsNumber,usFundedNumber,note,sources) {
+                $('#data-id').val(dataId ? dataId : -1);
+                $('#country-name').val(countryName ? countryName : '');
+                $('#base-name').val(baseName ? baseName : '');
+                $('#latitude-data').val(latitude ? latitude : '');
+                $('#longitude-data').val(longitude ? longitude : '');
+                $('#base-number').val(baseNumber ? baseNumber : 0);
+                $('#lily-pads-number').val(lilyPadsNumber ? lilyPadsNumber : 0);
+                $('#us-funded-number').val(usFundedNumber ? usFundedNumber : 0);
+                $('#note-data').val(note ? note : '');
+                $('#sources-data').val(sources ? sources : '');
                 $('#dataInsOrUpd').val('0');
-                $('#noteModal').modal('show');
+                $('#dataModal').modal('show');
             }
 
 
+            function myEditDataFunction(e) {
 
-            function myNotefunction(e) {
-               //showNoteModal($('#nid').value(),$('#ntitle').value(),$('#ndescription').value()) ;
-                $('#note-id').val(e.getAttribute("data-id"));
-                $('#note-title').val(e.getAttribute("data-title"));
-                $('#note-description').val(e.getAttribute("data-notedescription"));
-                $('#dataInsOrUpd').val(e.getAttribute("data-id"));
-                $('#noteModal').modal('show');
+                $('#data-id').val(e.getAttribute("datasource-id"));
+                $('#country-name').val(e.getAttribute("datasource-countryName"));
+                $('#base-name').val(e.getAttribute("datasource-baseName"));
+                $('#latitude-data').val(e.getAttribute("datasource-latitude"));
+                $('#longitude-data').val(e.getAttribute("datasource-longitude"));
+                $('#base-number').val(e.getAttribute("datasource-baseNumber"));
+                $('#lily-pads-number').val(e.getAttribute("datasource-lilyPadsNumber"));
+                $('#us-funded-number').val(e.getAttribute("datasource-usFundedNumber"));
+                $('#note-data').val(e.getAttribute("datasource-note"));
+                $('#sources-data').val(e.getAttribute("datasource-sources"));
+                $('#dataInsOrUpd').val(e.getAttribute("datasource-id"));
+                $('#dataModal').modal('show');
             }
 
 
